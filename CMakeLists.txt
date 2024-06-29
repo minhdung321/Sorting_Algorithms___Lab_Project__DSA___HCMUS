@@ -1,11 +1,9 @@
-cmake_minimum_required(VERSION 3.10 FATAL_ERROR)
-
-# Project Name
+cmake_minimum_required(VERSION 3.15)
 project(Sorting)
 
 # Set the C++ Standard
-set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_CXX_STANDARD_REQUIRED True) # C++11 is required
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 # Add the include directory to the project
 include_directories(include)
@@ -34,20 +32,10 @@ if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang
         target_compile_options(Sorting PRIVATE -march=native)
     endif()
     target_compile_definitions(Sorting PRIVATE "LINUX")
-    target_link_libraries(Sorting PRIVATE OpenMP::OpenMP_CXX)
 elseif(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
     target_compile_options(Sorting PRIVATE
         $<$<CONFIG:DEBUG>:/Zi /Od /RTC1 /openmp>
         $<$<CONFIG:RELEASE>:/O2 /Ob2 /DNDEBUG /openmp /arch:AVX2>
     )
     target_compile_definitions(Sorting PRIVATE "WINDOWS")
-    target_link_libraries(Sorting PRIVATE OpenMP::OpenMP_CXX)
 endif()
-
-# Use FetchContent to download and integrate OpenMP
-include(FetchContent)
-FetchContent_Declare(
-    OpenMP
-    URL https://github.com/llvm/llvm-project/releases/download/llvmorg-12.0.1/openmp-12.0.1.src.tar.xz
-)
-FetchContent_MakeAvailable(OpenMP)
