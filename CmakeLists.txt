@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.10 FATAL_ERROR) # CMake version check
+cmake_minimum_required(VERSION 3.10 FATAL_ERROR)
 
 # Project Name
 project(Sorting)
@@ -26,16 +26,28 @@ add_executable(Sorting ${SOURCES})
 
 # Set compiler flags
 if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-    target_compile_options(Sorting PRIVATE -fopenmp)
-    target_compile_definitions(Sorting PRIVATE "LINUX")
+    target_compile_options(Sorting PRIVATE
+        $<$<CONFIG:DEBUG>:-g -O0 -fopenmp>
+        $<$<CONFIG:RELEASE>:-O3 -DNDEBUG -fopenmp>
+    )
     if(USE_MARCH_NATIVE)
         target_compile_options(Sorting PRIVATE -march=native)
     endif()
-    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g -O0 -fopenmp")
-    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3 -DNDEBUG -fopenmp")
+    target_compile_definitions(Sorting PRIVATE "LINUX")
+    target_link_libraries(Sorting PRIVATE OpenMP::OpenMP_CXX)
 elseif(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
-    target_compile_options(Sorting PRIVATE /openmp /arch:AVX2)
+    target_compile_options(Sorting PRIVATE
+        $<$<CONFIG:DEBUG>:/Zi /Od /RTC1 /openmp>
+        $<$<CONFIG:RELEASE>:/O2 /Ob2 /DNDEBUG /openmp /arch:AVX2>
+    )
     target_compile_definitions(Sorting PRIVATE "WINDOWS")
-    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /Zi /Od /RTC1 /openmp")
-    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /O2 /Ob2 /DNDEBUG /openmp /arch:AVX2")
+    target_link_libraries(Sorting PRIVATE OpenMP::OpenMP_CXX)
 endif()
+
+# Use FetchContent to download and integrate OpenMP
+include(FetchContent)
+FetchContent_Declare(
+    OpenMP
+    URL https://github.com/llvm/llvm-project/releases/download/llvmorg-12.0.1/openmp-12.0.1.src.tar.xz
+)
+FetchContent_MakeAvailable(OpenMP)
