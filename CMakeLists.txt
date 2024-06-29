@@ -17,7 +17,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR}/bin/Debug)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/bin/Release)
 
 # Option to enable/disable march=native
-option(USE_MARCH_NATIVE "Enable -march=native flag" ON)
+option(USE_MARCH_NATIVE "Enable -march=native flag" ON) 
 
 # Add the executable
 add_executable(Sorting ${SOURCES})
