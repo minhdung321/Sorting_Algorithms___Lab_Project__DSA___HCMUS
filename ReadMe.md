@@ -59,9 +59,14 @@
         - `mkdir build`
         - `cd build`
         - `cmake ..`
+          
+          ![image](https://github.com/minhdung321/Sorting_Algorithms___Lab_Project__DSA___HCMUS/assets/39442146/ae30e558-ea43-4370-9a3b-c499c5c5cdd7)
         - `make`
-
-- After successfully building the project, you will find the executable file in the `build/bin/Debug` folder or `build/bin/Release` folder, depending on the build type.
+      
+          ![image](https://github.com/minhdung321/Sorting_Algorithms___Lab_Project__DSA___HCMUS/assets/39442146/48a2f71c-d8f6-4e32-ad3e-ca20de4eb896)
+        - Now, there is an executable file in `bin/` folder.   
+        
+- After successfully building the project, you will find the executable file in the `build/bin/Debug` folder or `build/bin/Release` folder, depending on the build type and platform.
   
 #### Building the project with CMake options:
     - To change the build type, use the following command: `cmake -DCMAKE_BUILD_TYPE=Release ..`
