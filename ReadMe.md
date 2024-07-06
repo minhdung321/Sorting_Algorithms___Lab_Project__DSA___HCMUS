@@ -31,7 +31,7 @@
 
 ### Requirements:
 - CMake verison 3.10 or higher
-- C++11 compliant compiler
+- C++14 compliant compiler
 
 ### Installation:
 - With Windows:
